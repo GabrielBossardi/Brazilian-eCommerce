@@ -1,0 +1,16 @@
+services:
+  db_transform:
+    image: postgres:15.1
+    restart: always
+    container_name: pg_database
+    environment:
+      - POSTGRES_USER=${DB_TRANSFORM_USER}
+      - POSTGRES_PASSWORD=${DB_TRANSFORM_PASSWORD}
+    expose:
+      - 5432
+    volumes:
+      - db_transform:/var/lib/postgresql/data
+
+volumes:
+  db_transform:
+    driver: local

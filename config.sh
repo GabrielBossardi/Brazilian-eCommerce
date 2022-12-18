@@ -1,0 +1,5 @@
+export DB_TRANSFORM_USER="postgres"
+export DB_TRANSFORM_PASSWORD="postgres"
+export DBT_USER="postgres"
+export DBT_PASSWORD="postgres"
+export DBT_DATABASE="warehouse"
