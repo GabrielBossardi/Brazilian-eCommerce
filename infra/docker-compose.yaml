@@ -1,16 +1,28 @@
 services:
-  db_transform:
+  database:
     image: postgres:15.1
     restart: always
     container_name: pg_database
     environment:
-      - POSTGRES_USER=${DB_TRANSFORM_USER}
-      - POSTGRES_PASSWORD=${DB_TRANSFORM_PASSWORD}
+      - POSTGRES_USER=${DB_ROOT_USER}
+      - POSTGRES_PASSWORD=${DB_ROOT_PASSWORD}
     expose:
-      - 5432
+      - ${DB_PORT:-5432}
     volumes:
-      - db_transform:/var/lib/postgresql/data
+      - ./init_database.sql:/docker-entrypoint-initdb.d/init_database.sql
+      - database:/var/lib/postgresql/data
+    networks:
+      stack_net:
+        ipv4_address: ${DB_HOST}
 
 volumes:
-  db_transform:
+  database:
     driver: local
+
+networks:
+  stack_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.0.0/16
